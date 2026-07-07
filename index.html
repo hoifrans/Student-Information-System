@@ -1049,7 +1049,30 @@ if(duplicate){
 alert("⚠ Student ID already exists.");
 return;
 }
+// CHECK FOR DUPLICATE FULL NAME
+if (students.some(s =>
+    s.first.toLowerCase() === student.first.toLowerCase() &&
+    s.last.toLowerCase() === student.last.toLowerCase()
+)) {
+    alert("⚠ A student with the same full name already exists.");
+    return;
+}
 
+// CHECK FOR DUPLICATE EMAIL
+if (students.some(s =>
+    s.email.toLowerCase() === student.email.toLowerCase()
+)) {
+    alert("⚠ Email address already exists.");
+    return;
+}
+
+// CHECK FOR DUPLICATE PHONE NUMBER
+if (students.some(s =>
+    s.phone === student.phone
+)) {
+    alert("⚠ Phone number already exists.");
+    return;
+}
 
 
 
