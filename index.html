@@ -710,48 +710,32 @@ required>
 
 <div class="row">
 
-
-
 <div class="column">
 
-
 <label>
-
-First Name
-
-</label>
-
-
-<input 
-id="fname"
-placeholder="Enter first name"
-required>
-
-
-</div>
-
-
-
-
-
-<div class="column">
-
-
-<label>
-
 Last Name
-
 </label>
-
 
 <input 
 id="lname"
 placeholder="Enter last name"
 required>
 
-
 </div>
 
+
+<div class="column">
+
+<label>
+First Name
+</label>
+
+<input 
+id="fname"
+placeholder="Enter first name"
+required>
+
+</div>
 
 </div>
 
@@ -1224,15 +1208,28 @@ success.style.display="none";
 
 function displayRecords(filteredStudents = students){
 
-
 let list =
 document.getElementById("recordList");
-
 
 
 list.innerHTML="";
 
 
+// SORT RECORDS ALPHABETICALLY
+filteredStudents.sort((a,b)=>{
+
+let lastNameOrder =
+a.last.localeCompare(b.last);
+
+if(lastNameOrder !== 0){
+
+return lastNameOrder;
+
+}
+
+return a.first.localeCompare(b.first);
+
+});
 
 
 
@@ -1250,9 +1247,6 @@ return;
 
 
 
-
-
-
 filteredStudents.forEach((s,index)=>{
 
 
@@ -1266,7 +1260,7 @@ list.innerHTML += `
 <b>Student ID:</b> ${s.id}<br>
 
 
-<b>Name:</b> ${s.first} ${s.last}<br>
+<b>Name:</b> ${s.last}, ${s.first}<br>
 
 
 <b>Year Level:</b> ${s.year}<br>
@@ -1310,7 +1304,6 @@ onclick="deleteStudent(${index})">
 
 
 });
-
 
 
 }
