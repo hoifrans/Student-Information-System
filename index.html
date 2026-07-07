@@ -734,7 +734,14 @@ required>
 
 
 
+<label>Gender</label>
 
+<select id="gender" required>
+    <option value="">Select Gender</option>
+    <option>Male</option>
+    <option>Female</option>
+    <option>Prefer not to say</option>
+</select>
 
 
 
@@ -746,79 +753,39 @@ Year Level
 
 
 <select id="year">
-
-
 <option>1st Year</option>
-
 <option>2nd Year</option>
-
 <option>3rd Year</option>
-
 <option>4th Year</option>
-
-
 </select>
 
 
-
-
-
-
-
-
 <label>
-
 Program
-
 </label>
-
-
 
 <select id="program">
-
-
 <option>
-
 BS Information Technology
-
 </option>
-
-
 <option>
-
 BS Computer Science
-
 </option>
-
-
 <option>
-
 BS Information System
-
 </option>
-
-
 <option>
-
 BS Computer Engineering
-
 </option>
-
-
 </select>
 
 
 
 
 
-
-
 <label>
-
 Email
-
 </label>
-
 
 <input 
 type="email"
@@ -829,16 +796,10 @@ required>
 
 
 
-
-
-
 <label>
-
 Phone Number
-
 </label>
-
-
+    
 <input 
 id="phone"
 inputmode="numeric"
@@ -849,13 +810,8 @@ required>
 
 
 
-
-
-
 <label>
-
 Address
-
 </label>
 
 
@@ -863,7 +819,6 @@ Address
 id="address"
 rows="3"
 placeholder="Enter complete address">
-
 </textarea>
 
 
@@ -1065,23 +1020,15 @@ e.preventDefault();
 
 let student={
 
-
 id:document.getElementById("studentID").value.trim(),
-
 first:document.getElementById("fname").value.trim(),
-
 last:document.getElementById("lname").value.trim(),
-
+gender: document.getElementById("gender").value,
 year:document.getElementById("year").value,
-
 program:document.getElementById("program").value,
-
 email:document.getElementById("email").value.trim(),
-
 phone:document.getElementById("phone").value.trim(),
-
 address:document.getElementById("address").value.trim()
-
 
 };
 
@@ -1093,25 +1040,13 @@ address:document.getElementById("address").value.trim()
 
 
 if(isNaN(student.id)){
-
-
 alert("⚠ Student ID must contain numbers only.");
-
 return;
-
-
 }
 
-
-
 if(isNaN(student.phone)){
-
-
 alert("⚠ Phone number must contain numbers only.");
-
 return;
-
-
 }
 
 
@@ -1120,17 +1055,9 @@ return;
 
 let duplicate =
 students.some(s => s.id === student.id);
-
-
-
 if(duplicate){
-
-
 alert("⚠ Student ID already exists.");
-
 return;
-
-
 }
 
 
@@ -1138,15 +1065,9 @@ return;
 
 
 students.push(student);
-
-
-
 localStorage.setItem(
-
 "students",
-
 JSON.stringify(students)
-
 );
 
 
@@ -1159,41 +1080,15 @@ JSON.stringify(students)
 
 let success =
 document.getElementById("success");
-
-
 success.style.display="block";
-
-
 success.innerHTML =
 "✅ Student information saved successfully!";
-
-
-
-
-
 this.reset();
-
-
-
-
-
-
 setTimeout(()=>{
-
-
 success.style.display="none";
-
-
 },3000);
 
-
-
 });
-
-
-
-
-
 
 
 // DISPLAY RECORDS
@@ -1249,28 +1144,14 @@ list.innerHTML += `
 
 <div class="studentCard">
 
-
 <b>Student ID:</b> ${s.id}<br>
-
-
 <b>Name:</b> ${s.last}, ${s.first}<br>
-
-
+<b>Gender:</b> ${s.gender}<br>
 <b>Year Level:</b> ${s.year}<br>
-
-
 <b>Program:</b> ${s.program}<br>
-
-
 <b>Email:</b> ${s.email}<br>
-
-
 <b>Phone:</b> ${s.phone}<br>
-
-
 <b>Address:</b> ${s.address}
-
-
 
 <br>
 
@@ -1418,45 +1299,42 @@ alert("✅ Student record deleted.");
 // EXPORT RECORDS
 
 
-function exportRecords(){
+function exportRecords() {
 
+    let text = "";
 
-let file = new Blob(
+    students.forEach((s, i) => {
 
-[JSON.stringify(students,null,2)],
+        text +=
+`Student ${i + 1}
+Student ID: ${s.id}
+Name: ${s.last}, ${s.first}
+Gender: ${s.gender}
+Year Level: ${s.year}
+Program: ${s.program}
+Email: ${s.email}
+Phone: ${s.phone}
+Address: ${s.address}
 
-{
+----------------------------------------
 
-type:"application/json"
+`;
 
-}
+    });
 
-);
+    let file = new Blob([text], {
+        type: "text/plain"
+    });
 
+    let link = document.createElement("a");
 
+    link.href = URL.createObjectURL(file);
 
-let link=document.createElement("a");
+    link.download = "Student_Records.txt";
 
+    link.click();
 
-
-link.href=
-
-URL.createObjectURL(file);
-
-
-
-link.download="Student_Records.json";
-
-
-
-link.click();
-
-
-
-alert("✅ Records exported successfully!");
-
-
-
+    alert("✅ Records exported successfully as a TXT file!");
 }
 
 
