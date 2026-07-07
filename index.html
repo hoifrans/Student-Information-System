@@ -7,214 +7,523 @@
 
 <title>Student Information System</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
 
+/* =====================
+   HCI DESIGN PRINCIPLES
+   Theme:
+   Navy Blue - Primary
+   Gold - Accent
+   Light Gray - Background
+===================== */
+
+
 *{
+
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial,sans-serif;
+
 }
+
 
 body{
+
     background:#eef2f7;
+    color:#333;
+    font-family:'Roboto', sans-serif;
     transition:.4s;
+
 }
 
+
+
 header{
-    position:relative;
+
     background:#004080;
     color:white;
     text-align:center;
     padding:25px;
+    position:relative;
+
 }
 
+
+
+header h1{
+
+    font-family:'Poppins',sans-serif;
+    font-weight:700;
+
+}
+
+
+
+header p{
+
+    margin-top:8px;
+
+}
+
+
+
 #themeToggle{
+
     position:absolute;
     right:25px;
     top:20px;
+
     padding:10px 18px;
+
     border:none;
     border-radius:25px;
-    background:#ffd700;
+
+    background:#FFD700;
     color:#003366;
+
     font-weight:bold;
+
     cursor:pointer;
+
 }
+
+
+
+#themeToggle:hover{
+
+    transform:scale(1.05);
+
+}
+
+
+
+
 
 nav{
+
     background:#003366;
+
     display:flex;
+
     justify-content:center;
+
     gap:20px;
+
     padding:12px;
+
 }
+
+
 
 nav button{
+
     background:none;
-    color:white;
+
     border:none;
+
+    color:white;
+
     font-size:16px;
+
     cursor:pointer;
+
     font-weight:bold;
+
 }
 
-nav button:hover{
-    color:#ffd700;
+
+
+nav button:hover,
+nav button:focus{
+
+    color:#FFD700;
+
 }
+
+
+
+
 
 .container{
+
     width:90%;
+
     max-width:800px;
+
     margin:30px auto;
+
     background:white;
+
     padding:30px;
+
     border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,.2);
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
 }
+
+
+
 
 h2{
+
     text-align:center;
+
+    font-family:'Poppins',sans-serif;
+
     color:#004080;
+
     margin-bottom:20px;
+
 }
+
+
+
+
 
 .row{
+
     display:flex;
+
     gap:15px;
+
     margin-bottom:15px;
+
 }
+
+
 
 .column{
+
     flex:1;
+
 }
 
+
+
+
+
 label{
+
     display:block;
+
     font-weight:bold;
+
     margin-bottom:5px;
+
 }
+
+
+
 
 input,
 select,
 textarea{
 
+
     width:100%;
+
     padding:12px;
+
     border:1px solid #ccc;
+
     border-radius:5px;
+
     font-size:15px;
 
+    font-family:'Roboto',sans-serif;
+
+
 }
 
-textarea{
-    resize:none;
+
+
+input:focus,
+select:focus,
+textarea:focus{
+
+
+    outline:none;
+
+    border-color:#004080;
+
+    box-shadow:0 0 5px #FFD700;
+
+
 }
+
+
+
 
 
 .buttons{
+
     display:flex;
+
     gap:10px;
+
     margin-top:20px;
+
+
 }
+
+
+
+
 
 button{
+
     cursor:pointer;
+
 }
+
+
+
+
 
 .save{
+
     flex:1;
+
     padding:12px;
+
     background:#004080;
+
     color:white;
+
     border:none;
+
     border-radius:5px;
+
+    font-weight:bold;
+
 }
+
+
+
+.save:hover{
+
+    background:#0059b3;
+
+}
+
+
+
+
 
 .reset{
+
     flex:1;
+
     padding:12px;
+
     background:#dc3545;
+
     color:white;
+
     border:none;
+
     border-radius:5px;
+
 }
+
+
+
+
 
 .export{
+
     width:100%;
+
     margin-top:15px;
+
     padding:12px;
+
     background:#198754;
+
     color:white;
+
     border:none;
+
     border-radius:5px;
+
+    font-weight:bold;
+
 }
+
+
+
+
+
 
 #success{
+
+
     display:none;
+
     margin-top:15px;
+
     padding:15px;
+
     background:#d4edda;
+
     color:#155724;
-    text-align:center;
-    border-radius:5px;
-}
-
-.studentCard{
-
-    background:#f8f9fa;
-    padding:15px;
-    margin-bottom:15px;
-    border-radius:8px;
-    border-left:5px solid #004080;
-
-}
-
-.delete{
-
-    margin-top:10px;
-    padding:8px 15px;
-    background:#dc3545;
-    color:white;
-    border:none;
-    border-radius:5px;
-
-}
-
-
-.hidden{
-    display:none;
-}
-
-
-footer{
 
     text-align:center;
-    background:#004080;
-    color:white;
-    padding:15px;
-    margin-top:30px;
+
+    border-radius:5px;
+
+    animation:fade .4s;
+
 
 }
+
+
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+
+}
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+
 
 
 #searchStudent{
 
+
     width:100%;
+
     padding:12px;
+
     border:2px solid #004080;
+
     border-radius:5px;
+
     font-size:16px;
 
+
 }
+
+
+
+
+
+.studentCard{
+
+
+    background:#f8f9fa;
+
+    padding:15px;
+
+    margin-bottom:15px;
+
+    border-radius:8px;
+
+    border-left:5px solid #004080;
+
+
+}
+
+
+
+
+
+.studentCard b{
+
+    font-family:"Courier New", monospace;
+
+}
+
+
+
+
+
+.delete{
+
+
+    margin-top:10px;
+
+    padding:8px 15px;
+
+    background:#dc3545;
+
+    color:white;
+
+    border:none;
+
+    border-radius:5px;
+
+
+}
+
+
+
+
+
+.delete:hover{
+
+    background:#b02a37;
+
+}
+
+
+
+
+
+.hidden{
+
+    display:none;
+
+}
+
+
+
+
+
+footer{
+
+
+    text-align:center;
+
+    background:#004080;
+
+    color:white;
+
+    padding:15px;
+
+    margin-top:30px;
+
+
+}
+
+
+
+
+/* DARK MODE */
 
 
 body.dark{
 
     background:#121212;
+
     color:white;
 
 }
+
+
 
 body.dark .container{
 
@@ -222,20 +531,27 @@ body.dark .container{
 
 }
 
+
+
 body.dark input,
 body.dark select,
 body.dark textarea{
 
     background:#333;
+
     color:white;
 
 }
+
+
 
 body.dark .studentCard{
 
     background:#2b2b2b;
 
 }
+
+
 
 body.dark h2{
 
@@ -244,14 +560,21 @@ body.dark h2{
 }
 
 
+
+
+
+
 @media(max-width:600px){
+
 
 #themeToggle{
 
     position:static;
+
     margin-bottom:10px;
 
 }
+
 
 .row{
 
@@ -259,12 +582,16 @@ body.dark h2{
 
 }
 
+
 nav{
 
     flex-direction:column;
+
     align-items:center;
 
 }
+
+
 
 .container{
 
@@ -272,155 +599,393 @@ nav{
 
 }
 
+
+
 }
 
 
 </style>
-
 </head>
 
 
 <body>
 
+
 <header>
 
+
 <button id="themeToggle">
+
 🌙 Dark Mode
+
 </button>
 
+
 <h1>
+
 Student Information System
+
 </h1>
 
+
 <p>
+
 Manage Student Records Efficiently
+
 </p>
+
 
 </header>
 
 
+
+
+
 <nav>
 
+
 <button onclick="showPage('registration')">
+
 📝 Registration
+
 </button>
+
 
 <button onclick="showPage('records')">
+
 📋 Records
+
 </button>
 
+
 </nav>
+
+
+
 
 
 <div class="container">
 
 
+
+
+
+<!-- REGISTRATION PAGE -->
+
+
 <div id="registration">
 
+
 <h2>
+
 Student Registration Form
+
 </h2>
+
+
+
 
 
 <form id="studentForm">
 
 
-<label>Student ID</label>
-<input id="studentID" required>
+
+
+
+<label>
+
+Student ID
+
+</label>
+
+
+<input 
+id="studentID"
+placeholder="Enter numeric Student ID"
+required>
+
+
+
 
 
 <div class="row">
 
-<div class="column">
-
-<label>First Name</label>
-<input id="fname" required>
-
-</div>
 
 
 <div class="column">
 
-<label>Last Name</label>
-<input id="lname" required>
+
+<label>
+
+First Name
+
+</label>
+
+
+<input 
+id="fname"
+placeholder="Enter first name"
+required>
+
 
 </div>
 
+
+
+
+
+<div class="column">
+
+
+<label>
+
+Last Name
+
+</label>
+
+
+<input 
+id="lname"
+placeholder="Enter last name"
+required>
+
+
 </div>
 
 
-<label>Year Level</label>
+</div>
+
+
+
+
+
+
+
+<label>
+
+Year Level
+
+</label>
+
 
 <select id="year">
 
+
 <option>1st Year</option>
+
 <option>2nd Year</option>
+
 <option>3rd Year</option>
+
 <option>4th Year</option>
+
 
 </select>
 
 
-<label>Program</label>
+
+
+
+
+
+
+<label>
+
+Program
+
+</label>
+
+
 
 <select id="program">
 
-<option>BS Information Technology</option>
-<option>BS Computer Science</option>
-<option>BS Information System</option>
-<option>BS Computer Engineering</option>
+
+<option>
+
+BS Information Technology
+
+</option>
+
+
+<option>
+
+BS Computer Science
+
+</option>
+
+
+<option>
+
+BS Information System
+
+</option>
+
+
+<option>
+
+BS Computer Engineering
+
+</option>
+
 
 </select>
 
 
-<label>Email</label>
-<input type="email" id="email" required>
 
 
-<label>Phone Number</label>
-<input id="phone" inputmode="numeric" required>
 
 
-<label>Address</label>
-<textarea id="address" rows="3"></textarea>
+
+<label>
+
+Email
+
+</label>
+
+
+<input 
+type="email"
+id="email"
+placeholder="example@email.com"
+required>
+
+
+
+
+
+
+
+<label>
+
+Phone Number
+
+</label>
+
+
+<input 
+id="phone"
+inputmode="numeric"
+placeholder="Enter phone number"
+required>
+
+
+
+
+
+
+
+
+<label>
+
+Address
+
+</label>
+
+
+<textarea 
+id="address"
+rows="3"
+placeholder="Enter complete address">
+
+</textarea>
+
+
+
+
+
 
 
 <div class="buttons">
 
+
+
 <button class="save">
-Save Information
+
+💾 Save Information
+
 </button>
 
-<button type="reset" class="reset">
+
+
+
+<button 
+type="reset"
+class="reset">
+
 Clear
+
 </button>
+
+
 
 </div>
+
+
+
 
 </form>
 
 
-<div id="success"></div>
+
+
+
+<div id="success">
 
 </div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
 <!-- RECORD PAGE -->
+
+
 
 <div id="records" class="hidden">
 
+
+
 <h2>
+
 Saved Student Records
+
 </h2>
 
 
+
+
+
 <input 
-type="text" 
-id="searchStudent" 
-placeholder="🔍 Search by Student ID or Name..."
+
+type="text"
+
+id="searchStudent"
+
+placeholder="🔍 Search by Student ID or Student Name..."
+
 onkeyup="searchStudents()"
+
 >
 
 
+
+
+
 <br><br>
+
+
+
+
 
 
 <div id="recordList">
@@ -428,27 +993,48 @@ onkeyup="searchStudents()"
 </div>
 
 
-<button class="export" onclick="exportRecords()">
+
+
+
+<button 
+
+class="export"
+
+onclick="exportRecords()">
+
 
 📁 Export Records
+
 
 </button>
 
 
-</div>
+
+
 
 
 </div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
 
 
 <footer>
 
+
 © 2026 Student Information System
 
+
 </footer>
-
-
-
 <script>
 
 
@@ -458,6 +1044,7 @@ JSON.parse(localStorage.getItem("students")) || [];
 
 
 
+// PAGE NAVIGATION
 
 function showPage(page){
 
@@ -489,7 +1076,7 @@ displayRecords();
 
 
 
-
+// SAVE STUDENT INFORMATION
 
 document.getElementById("studentForm")
 .addEventListener("submit",function(e){
@@ -502,21 +1089,21 @@ e.preventDefault();
 let student={
 
 
-id:studentID.value,
+id:document.getElementById("studentID").value.trim(),
 
-first:fname.value,
+first:document.getElementById("fname").value.trim(),
 
-last:lname.value,
+last:document.getElementById("lname").value.trim(),
 
-year:year.value,
+year:document.getElementById("year").value,
 
-program:program.value,
+program:document.getElementById("program").value,
 
-email:email.value,
+email:document.getElementById("email").value.trim(),
 
-phone:phone.value,
+phone:document.getElementById("phone").value.trim(),
 
-address:address.value
+address:document.getElementById("address").value.trim()
 
 
 };
@@ -525,11 +1112,16 @@ address:address.value
 
 
 
+// ERROR PREVENTION
+
+
 if(isNaN(student.id)){
 
-alert("Student ID must contain numbers only");
+
+alert("⚠ Student ID must contain numbers only.");
 
 return;
+
 
 }
 
@@ -537,11 +1129,33 @@ return;
 
 if(isNaN(student.phone)){
 
-alert("Phone number must contain numbers only");
+
+alert("⚠ Phone number must contain numbers only.");
 
 return;
 
+
 }
+
+
+
+
+
+let duplicate =
+students.some(s => s.id === student.id);
+
+
+
+if(duplicate){
+
+
+alert("⚠ Student ID already exists.");
+
+return;
+
+
+}
+
 
 
 
@@ -551,22 +1165,49 @@ students.push(student);
 
 
 localStorage.setItem(
+
 "students",
+
 JSON.stringify(students)
+
 );
 
 
 
 
-document.getElementById("success").style.display="block";
 
 
-document.getElementById("success").innerHTML=
-"✅ Student saved successfully!";
+// FEEDBACK
+
+
+let success =
+document.getElementById("success");
+
+
+success.style.display="block";
+
+
+success.innerHTML =
+"✅ Student information saved successfully!";
+
+
 
 
 
 this.reset();
+
+
+
+
+
+
+setTimeout(()=>{
+
+
+success.style.display="none";
+
+
+},3000);
 
 
 
@@ -578,30 +1219,45 @@ this.reset();
 
 
 
+// DISPLAY RECORDS
+
+
 function displayRecords(filteredStudents = students){
 
 
-let list=document.getElementById("recordList");
+let list =
+document.getElementById("recordList");
+
 
 
 list.innerHTML="";
 
 
 
-if(filteredStudents.length==0){
 
-list.innerHTML="<p>No matching records found.</p>";
+
+if(filteredStudents.length===0){
+
+
+list.innerHTML =
+
+"<p>📌 No student records found.</p>";
 
 return;
 
+
 }
+
+
+
 
 
 
 filteredStudents.forEach((s,index)=>{
 
 
-list.innerHTML+=`
+
+list.innerHTML += `
 
 
 <div class="studentCard">
@@ -609,15 +1265,21 @@ list.innerHTML+=`
 
 <b>Student ID:</b> ${s.id}<br>
 
+
 <b>Name:</b> ${s.first} ${s.last}<br>
 
-<b>Year:</b> ${s.year}<br>
+
+<b>Year Level:</b> ${s.year}<br>
+
 
 <b>Program:</b> ${s.program}<br>
 
+
 <b>Email:</b> ${s.email}<br>
 
+
 <b>Phone:</b> ${s.phone}<br>
+
 
 <b>Address:</b> ${s.address}
 
@@ -626,9 +1288,16 @@ list.innerHTML+=`
 <br>
 
 
-<button class="delete" onclick="deleteStudent(${index})">
 
-Delete
+<button 
+
+class="delete"
+
+onclick="deleteStudent(${index})">
+
+
+🗑 Delete
+
 
 </button>
 
@@ -639,7 +1308,9 @@ Delete
 `;
 
 
+
 });
+
 
 
 }
@@ -650,27 +1321,40 @@ Delete
 
 
 
+// SEARCH FUNCTION
+
+
 function searchStudents(){
 
 
-let searchValue = 
+let keyword =
+
 document.getElementById("searchStudent")
+
 .value
+
 .toLowerCase();
 
 
 
-let filtered = students.filter(student =>
+
+
+let result = students.filter(student =>
 
 
 
-student.id.toLowerCase().includes(searchValue) ||
+student.id.toLowerCase()
+.includes(keyword)
 
+||
 
-student.first.toLowerCase().includes(searchValue) ||
+student.first.toLowerCase()
+.includes(keyword)
 
+||
 
-student.last.toLowerCase().includes(searchValue)
+student.last.toLowerCase()
+.includes(keyword)
 
 
 
@@ -678,7 +1362,12 @@ student.last.toLowerCase().includes(searchValue)
 
 
 
-displayRecords(filtered);
+
+
+displayRecords(result);
+
+
+
 
 
 
@@ -688,9 +1377,24 @@ displayRecords(filtered);
 
 
 
+// DELETE FUNCTION
 
 
 function deleteStudent(index){
+
+
+
+let confirmDelete = confirm(
+
+"Are you sure you want to delete this student record?"
+
+);
+
+
+
+
+if(confirmDelete){
+
 
 
 students.splice(index,1);
@@ -698,8 +1402,11 @@ students.splice(index,1);
 
 
 localStorage.setItem(
+
 "students",
+
 JSON.stringify(students)
+
 );
 
 
@@ -708,23 +1415,35 @@ displayRecords();
 
 
 
+alert("✅ Student record deleted.");
+
+
+
+}
+
+
+
 }
 
 
 
 
 
-
+// EXPORT RECORDS
 
 
 function exportRecords(){
 
 
-let file=new Blob(
+let file = new Blob(
 
 [JSON.stringify(students,null,2)],
 
-{type:"application/json"}
+{
+
+type:"application/json"
+
+}
 
 );
 
@@ -733,13 +1452,22 @@ let file=new Blob(
 let link=document.createElement("a");
 
 
-link.href=URL.createObjectURL(file);
+
+link.href=
+
+URL.createObjectURL(file);
+
 
 
 link.download="Student_Records.json";
 
 
+
 link.click();
+
+
+
+alert("✅ Records exported successfully!");
 
 
 
@@ -752,19 +1480,25 @@ link.click();
 
 
 
+// DARK MODE
+
+
 document.getElementById("themeToggle")
+
 .onclick=function(){
+
 
 
 document.body.classList.toggle("dark");
 
 
 
-this.innerHTML=
+
+this.innerHTML =
+
 
 
 document.body.classList.contains("dark")
-
 
 ?
 
@@ -783,8 +1517,11 @@ document.body.classList.contains("dark")
 
 
 
+
+
 </script>
 
 
 </body>
+
 </html>
