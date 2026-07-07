@@ -1036,8 +1036,11 @@ alert("⚠ Phone number must contain numbers only.");
 return;
 }
 
-
-
+if(student.gender === ""){
+alert("⚠ Please select your gender.");
+document.getElementById("gender").focus();
+return;
+}
 
 
 let duplicate =
