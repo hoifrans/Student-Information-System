@@ -686,16 +686,12 @@ body.dark h2{
 
 
 <h1>
-
-BSIT Student Information System
-
+Student Information System
 </h1>
 
 
 <p>
-
 Manage Student Records Efficiently
-
 </p>
 
 
@@ -817,12 +813,7 @@ required>
 
 
 
-<label>
-
-Year Level
-
-</label>
-
+<label>Year Level</label>
 
 <select id="year">
 <option>1st Year</option>
@@ -832,14 +823,21 @@ Year Level
 </select>
 
 
-<label>Program</label>
-
-<input
-    type="text"
-    id="program"
-    value="BS Information Technology"
-    readonly>
-
+<select id="program" required>
+    <option value="">Select Program</option>
+    <option>BSFM</option>
+    <option>BSHRM</option>
+    <option>BSMM</option>
+    <option>BSN</option>
+    <option>BSCrim</option>
+    <option>BFSci</option>
+    <option>BSED</option>
+    <option>BEED</option>
+    <option>BPed</option>
+    <option>BHumServ</option>
+    <option>BSPsych</option>
+    <option>BSSW</option>
+</select>
 
 
 
@@ -1028,7 +1026,7 @@ onclick="exportRecords()">
 <footer>
 
 
-© 2026 BSIT Student Information System
+© 2026 Student Information System
 
 
 </footer>
@@ -1052,7 +1050,6 @@ document.getElementById("registration")
 
 document.getElementById("records")
 .classList.add("hidden");
-
 
 
 document.getElementById(page)
@@ -1125,7 +1122,11 @@ alert("⚠ Please select your gender.");
 document.getElementById("gender").focus();
 return;
 }
-
+if(student.program === ""){
+    alert("⚠ Please select a program.");
+    document.getElementById("program").focus();
+    return;
+}
 
 let duplicate =
 students.some(s => s.id === student.id);
@@ -1204,6 +1205,7 @@ if(confirmSave){
 
 
 function displayRecords(filteredStudents = students){
+
 
     let list = document.getElementById("recordList");
     list.innerHTML = "";
