@@ -26,6 +26,9 @@ body{
     color:#333;
     font-family:Tahoma, sans-serif;
     transition:.4s;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
 
 }
 
@@ -35,12 +38,19 @@ header{
 
     background:#004080;
     color:white;
-    text-align:center;
-    padding:25px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    padding:30px 20px;
+
     position:relative;
 
-}
+    text-align:center;
 
+}
 
 
 header h1{
@@ -100,9 +110,13 @@ nav{
 
     justify-content:center;
 
-    gap:20px;
+    align-items:center;
 
-    padding:12px;
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    padding:15px;
 
 }
 
@@ -139,8 +153,7 @@ nav button:focus{
 
 .container{
 
-    width:100%;
-
+    width:90%;
     max-width:900px;
 
     margin:30px auto;
@@ -153,23 +166,9 @@ nav button:focus{
 
     box-shadow:0 5px 15px rgba(0,0,0,.15);
 
-}
-
-
-
-
-h2{
-
-    text-align:center;
-
-    font-family:'Poppins',sans-serif;
-
-    color:#004080;
-
-    margin-bottom:20px;
+    flex:1;
 
 }
-
 
 
 
@@ -178,21 +177,19 @@ h2{
 
     display:flex;
 
+    flex-wrap:wrap;
+
     gap:15px;
 
     margin-bottom:15px;
 
 }
 
-
-
 .column{
 
-    flex:1;
+    flex:1 1 300px;
 
 }
-
-
 
 
 
@@ -207,7 +204,21 @@ label{
 }
 
 
+img{
 
+    max-width:100%;
+
+    height:auto;
+
+}
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+}
 
 input,
 select,
@@ -248,27 +259,31 @@ textarea:focus{
 
 
 
-
 .buttons{
 
     display:flex;
+
+    flex-wrap:wrap;
 
     gap:10px;
 
     margin-top:20px;
 
-
 }
 
+.buttons button{
 
+    flex:1 1 220px;
 
-
+}
 
 button{
 
     cursor:pointer;
 
 }
+
+
 
 
 
@@ -500,6 +515,12 @@ footer{
 
 }
 
+.tableWrapper{
+
+    width:100%;
+    overflow-x:auto;
+
+}
 
 .studentTable{
 
@@ -602,42 +623,47 @@ body.dark h2{
 
 
 
-@media(max-width:600px){
+@media (max-width:768px){
 
+    header{
 
-#themeToggle{
+        padding:25px 15px;
 
-    position:static;
+    }
 
-    margin-bottom:10px;
+    #themeToggle{
 
-}
+        position:static;
 
+        margin-bottom:15px;
 
-.row{
+    }
 
-    flex-direction:column;
+    nav{
 
-}
+        flex-direction:column;
 
+    }
 
-nav{
+    .row{
 
-    flex-direction:column;
+        flex-direction:column;
 
-    align-items:center;
+    }
 
-}
+    .buttons{
 
+        flex-direction:column;
 
+    }
 
-.container{
+    .container{
 
-    width:95%;
+        width:95%;
 
-}
+        padding:20px;
 
-
+    }
 
 }
 
@@ -931,7 +957,9 @@ Saved Student Records
 </h2>
 
 
+<div id="recordCount" class="countBox"></div>
 
+<br>
 
 
 <input 
@@ -1076,14 +1104,20 @@ address:document.getElementById("address").value.trim()
 // ERROR PREVENTION
 
 
-if(isNaN(student.id)){
-alert("⚠ Student ID must contain numbers only.");
-return;
+if(student.id === ""){
+
+    alert("Enter Student ID");
+
+    return;
+
 }
 
-if(isNaN(student.phone)){
-alert("⚠ Phone number must contain numbers only.");
-return;
+if(student.phone.length !== 11){
+
+    alert("Phone number must be 11 digits.");
+
+    return;
+
 }
 
 if(student.gender === ""){
@@ -1163,19 +1197,6 @@ if(confirmSave){
 
 
 
-// FEEDBACK
-
-
-let success =
-document.getElementById("success");
-success.style.display="block";
-success.innerHTML =
-"✅ Student information saved successfully!";
-this.reset();
-setTimeout(()=>{
-success.style.display="none";
-},3000);
-
 });
 
 
@@ -1209,7 +1230,8 @@ function displayRecords(filteredStudents = students){
         let table = `
             <h3 style="margin-top:25px;color:#004080;">${year}</h3>
 
-            <table class="studentTable">
+            <div class="tableWrapper">
+              <table class="studentTable">
 
                 <thead>
                     <tr>
@@ -1251,6 +1273,7 @@ function displayRecords(filteredStudents = students){
         table += `
                 </tbody>
             </table>
+          </div>
         `;
 
         list.innerHTML += table;
