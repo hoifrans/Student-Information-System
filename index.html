@@ -139,9 +139,9 @@ nav button:focus{
 
 .container{
 
-    width:90%;
+    width:100%;
 
-    max-width:800px;
+    max-width:900px;
 
     margin:30px auto;
 
@@ -501,7 +501,54 @@ footer{
 }
 
 
+.studentTable{
 
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+    margin-bottom:30px;
+
+}
+
+.studentTable th{
+
+    background:#004080;
+    color:white;
+    padding:12px;
+
+}
+
+.studentTable td{
+
+    border:1px solid #ccc;
+    padding:10px;
+    text-align:center;
+
+}
+
+.studentTable tr:nth-child(even){
+
+    background:#f5f5f5;
+
+}
+
+.studentTable tr:hover{
+
+    background:#e8f0ff;
+
+}
+
+body.dark .studentTable tr:nth-child(even){
+
+    background:#2b2b2b;
+
+}
+
+body.dark .studentTable td{
+
+    border:1px solid #555;
+
+}
 
 /* DARK MODE */
 
@@ -690,9 +737,10 @@ Student ID
 </label>
 
 
-<input 
+<input
+type="number"
 id="studentID"
-placeholder="Enter numeric Student ID"
+placeholder="Enter Student ID"
 required>
 
 
@@ -787,10 +835,12 @@ required>
 Phone Number
 </label>
     
-<input 
+<input
+type="tel"
 id="phone"
-inputmode="numeric"
-placeholder="Enter phone number"
+pattern="[0-9]{11}"
+maxlength="11"
+placeholder="09XXXXXXXXX"
 required>
 
 
@@ -1077,11 +1127,36 @@ if (students.some(s =>
 
 
 
-students.push(student);
-localStorage.setItem(
-"students",
-JSON.stringify(students)
-);
+let confirmSave = confirm("Do you want to save this student information?");
+
+if(confirmSave){
+
+    students.push(student);
+
+    localStorage.setItem(
+        "students",
+        JSON.stringify(students)
+    );
+
+    // FEEDBACK
+    let success = document.getElementById("success");
+
+    success.style.display = "block";
+
+    success.innerHTML =
+    "✅ Student information saved successfully!";
+
+    document.getElementById("studentForm").reset();
+
+    setTimeout(() => {
+        success.style.display = "none";
+    }, 3000);
+
+}else{
+
+    alert("❌ Save cancelled.");
+
+}
 
 
 
@@ -1109,89 +1184,82 @@ success.style.display="none";
 
 function displayRecords(filteredStudents = students){
 
-let list =
-document.getElementById("recordList");
+    let list = document.getElementById("recordList");
+    list.innerHTML = "";
 
+    const years = [
+        "1st Year",
+        "2nd Year",
+        "3rd Year",
+        "4th Year"
+    ];
 
-list.innerHTML="";
+    years.forEach(year => {
 
+        let yearStudents = filteredStudents.filter(s => s.year === year);
 
-// SORT RECORDS ALPHABETICALLY
-filteredStudents.sort((a,b)=>{
+        if(yearStudents.length === 0) return;
 
-let lastNameOrder =
-a.last.localeCompare(b.last);
+        yearStudents.sort((a,b)=>{
+            let last = a.last.localeCompare(b.last);
+            if(last !== 0) return last;
+            return a.first.localeCompare(b.first);
+        });
 
-if(lastNameOrder !== 0){
+        let table = `
+            <h3 style="margin-top:25px;color:#004080;">${year}</h3>
 
-return lastNameOrder;
+            <table class="studentTable">
 
-}
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Program</th>
+                        <th>Gender</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
 
-return a.first.localeCompare(b.first);
+                <tbody>
+        `;
 
-});
+        yearStudents.forEach(student => {
 
+            table += `
+                <tr>
+                    <td>${student.id}</td>
+                    <td>${student.last}, ${student.first}</td>
+                    <td>${student.program}</td>
+                    <td>${student.gender}</td>
+                    <td>${student.email}</td>
+                    <td>${student.phone}</td>
 
+                    <td>
+                        <button class="delete"
+                        onclick="deleteStudent('${student.id}')">
+                        Delete
+                        </button>
+                    </td>
+                </tr>
+            `;
 
-if(filteredStudents.length===0){
+        });
 
+        table += `
+                </tbody>
+            </table>
+        `;
 
-list.innerHTML =
+        list.innerHTML += table;
 
-"<p>📌 No student records found.</p>";
+    });
 
-return;
-
-
-}
-
-
-
-filteredStudents.forEach((s,index)=>{
-
-
-
-list.innerHTML += `
-
-
-<div class="studentCard">
-
-<b>Student ID:</b> ${s.id}<br>
-<b>Name:</b> ${s.last}, ${s.first}<br>
-<b>Gender:</b> ${s.gender}<br>
-<b>Year Level:</b> ${s.year}<br>
-<b>Program:</b> ${s.program}<br>
-<b>Email:</b> ${s.email}<br>
-<b>Phone:</b> ${s.phone}<br>
-<b>Address:</b> ${s.address}
-
-<br>
-
-
-
-<button 
-
-class="delete"
-
-onclick="deleteStudent(${index})">
-
-
-🗑 Delete
-
-
-</button>
-
-
-</div>
-
-
-`;
-
-
-
-});
-
+    if(list.innerHTML === ""){
+        list.innerHTML = "<p>No student records found.</p>";
+    }
 
 }
 
@@ -1260,48 +1328,26 @@ displayRecords(result);
 // DELETE FUNCTION
 
 
-function deleteStudent(index){
+function deleteStudent(id){
 
+    let confirmDelete = confirm(
+        "Are you sure you want to delete this student record?"
+    );
 
+    if(confirmDelete){
 
-let confirmDelete = confirm(
+        students = students.filter(student => student.id !== id);
 
-"Are you sure you want to delete this student record?"
+        localStorage.setItem(
+            "students",
+            JSON.stringify(students)
+        );
 
-);
+        displayRecords();
 
+        alert("✅ Student record deleted.");
 
-
-
-if(confirmDelete){
-
-
-
-students.splice(index,1);
-
-
-
-localStorage.setItem(
-
-"students",
-
-JSON.stringify(students)
-
-);
-
-
-
-displayRecords();
-
-
-
-alert("✅ Student record deleted.");
-
-
-
-}
-
-
+    }
 
 }
 
@@ -1312,42 +1358,144 @@ alert("✅ Student record deleted.");
 // EXPORT RECORDS
 
 
-function exportRecords() {
+function exportRecords(){
 
-    let text = "";
+    const years = [
+        "1st Year",
+        "2nd Year",
+        "3rd Year",
+        "4th Year"
+    ];
 
-    students.forEach((s, i) => {
+    let html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Student Records</title>
 
-        text +=
-`Student ${i + 1}
-Student ID: ${s.id}
-Name: ${s.last}, ${s.first}
-Gender: ${s.gender}
-Year Level: ${s.year}
-Program: ${s.program}
-Email: ${s.email}
-Phone: ${s.phone}
-Address: ${s.address}
+        <style>
 
-----------------------------------------
+        body{
+            font-family:Arial,sans-serif;
+            margin:30px;
+        }
 
-`;
+        h1{
+            text-align:center;
+        }
+
+        h2{
+            margin-top:35px;
+            background:#004080;
+            color:white;
+            padding:10px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:10px;
+        }
+
+        th,td{
+            border:1px solid black;
+            padding:8px;
+            text-align:center;
+        }
+
+        th{
+            background:#d9e8ff;
+        }
+
+        </style>
+
+    </head>
+
+    <body>
+
+    <h1>Student Information System</h1>
+    <p><b>Date Exported:</b> ${new Date().toLocaleString()}</p>
+    `;
+
+    years.forEach(year=>{
+
+        let yearStudents = students
+            .filter(s=>s.year===year)
+            .sort((a,b)=>{
+
+                let last = a.last.localeCompare(b.last);
+
+                if(last!==0) return last;
+
+                return a.first.localeCompare(b.first);
+
+            });
+
+        html += `<h2>${year}</h2>`;
+
+        if(yearStudents.length===0){
+
+            html += `<p>No records available.</p>`;
+
+            return;
+
+        }
+
+        html += `
+        <table>
+
+        <tr>
+
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Program</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address</th>
+
+        </tr>
+        `;
+
+        yearStudents.forEach(s=>{
+
+            html += `
+            <tr>
+
+                <td>${s.id}</td>
+                <td>${s.last}, ${s.first}</td>
+                <td>${s.gender}</td>
+                <td>${s.program}</td>
+                <td>${s.email}</td>
+                <td>${s.phone}</td>
+                <td>${s.address}</td>
+
+            </tr>
+            `;
+
+        });
+
+        html += "</table>";
 
     });
 
-    let file = new Blob([text], {
-        type: "text/plain"
-    });
+    html += `
+    </body>
+    </html>
+    `;
+
+    let blob = new Blob([html], {type:"text/html"});
 
     let link = document.createElement("a");
 
-    link.href = URL.createObjectURL(file);
+    link.href = URL.createObjectURL(blob);
 
-    link.download = "Student_Records.txt";
+    link.download = "Student_Records.html";
 
     link.click();
 
-    alert("✅ Records exported successfully as a TXT file!");
+    alert("✅ Student records exported successfully!");
+
 }
 
 
